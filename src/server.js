@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 // routes
-const userRoutes = require('./routes/user');
+const authRoutes = require('./routes/auth');
 
 
 env.config();
@@ -39,7 +39,7 @@ mongoose.Promise = global.Promise;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/api', userRoutes);
+app.use('/api', authRoutes);
 // app.use(bodyParser());
 
 app.listen(process.env.PORT, () => {
