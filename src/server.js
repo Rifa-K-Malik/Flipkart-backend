@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 
 // routes
 const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin/auth');
+
 
 
 env.config();
@@ -40,6 +42,7 @@ mongoose.Promise = global.Promise;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api', authRoutes);
+app.use('/api', adminRoutes);
 // app.use(bodyParser());
 
 app.listen(process.env.PORT, () => {
