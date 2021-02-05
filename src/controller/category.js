@@ -4,10 +4,11 @@ const slugify = require('slugify');
 function createCategories(categories, parentId = null) {
 
     const categoryList = [];
+    let category;
     if (parentId == null) {
-        categories.filter(cat => cat.parentId == undefined);
+        category = categories.filter(cat => cat.parentId == undefined);
     } else {
-        category = categories.filter(cat => cat.parentId == parenntId);
+        category = categories.filter(cat => cat.parentId == parentId);
 
     }
 
@@ -51,5 +52,5 @@ exports.getCategories = (req, res) => {
 
                 res.status(200).json({ categoryList });
             }
-        })
-}
+        });
+};
