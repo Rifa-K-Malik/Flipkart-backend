@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin/auth');
 const categoryRoutes = require('./routes/category');
-
+const productRoutes = require('./routes/product');
 
 
 env.config();
@@ -45,6 +45,7 @@ app.use(bodyParser.json());
 app.use('/api', authRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', categoryRoutes);
+app.use('/api', productRoutes);
 // app.use(bodyParser());
 
 app.listen(process.env.PORT, () => {
