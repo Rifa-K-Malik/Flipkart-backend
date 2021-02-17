@@ -30,19 +30,3 @@ exports.createProduct =  (req, res) => {
     }
   }));
 }; 
-
-
-
-
-
-
-
-
-
-
-// 34.28
-
-
-
-
-
