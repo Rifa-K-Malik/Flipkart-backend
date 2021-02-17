@@ -47,6 +47,7 @@ app.use('/api', adminRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', productRoutes);
 app.use('/api', cartRoutes);
+
 // app.use(bodyParser());
 
 app.listen(process.env.PORT, () => {
