@@ -6,45 +6,39 @@ exports.addItemToCart = (req, res) => {
         if (error) return res.status(400).json({ error });
         if (cart) {
 
-            const product = req.body.cartItem.product;
+            const product = req.body.cartItems.product;
             const item = cart.cartItems.find(c => c.product == product);
-            if(item){
-                Cart.findOneAndUpdate({ "user": req.user._id, "cartItems.product": product}, {
+            let condition, update;
+            if (item) {
+                condition = { "user": req.user._id, "cartItems.product": product };
+                update = {
                     "$set": {
-                        "cartItems": {
+                        "cartItems.$": {
                             ...req.body.cartItems,
                             quantity: item.quantity + req.body.cartItems.quantity
                         }
                     }
-                })
-     
-                .exec((error, _cart) => {
-                    if (error) return res.status(400).json({ error });
-                    if (_cart) {
-                        return res.status(201).json({ cart: _cart });
-                    }
-                })
-            }else{
-                Cart.findOneAndUpdate({ user: req.user._id }, {
+                };
+            } else {
+                condition = { user: req.user._id };
+                update = {
                     "$push": {
                         "cartItems": req.body.cartItems
                     }
-                })
-    
+                };
+            }
+            Cart.findOneAndUpdate(condition, update)
                 .exec((error, _cart) => {
                     if (error) return res.status(400).json({ error });
                     if (_cart) {
                         return res.status(201).json({ cart: _cart });
                     }
                 })
-            }
-            
         } else {
             const cart = new Cart({
                 user: req.user._id,
                 cartItems: [req.body.cartItems]
             });
-
             cart.save((error, cart) => {
                 if (error) return res.status(400).json({ error });
                 if (cart) {
