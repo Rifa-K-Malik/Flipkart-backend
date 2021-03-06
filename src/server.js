@@ -23,7 +23,16 @@ mongoose.connect( `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONG
     useCreateIndex: true
     }
 ).then(res=>{console.log('connected')}).catch(err=>{console.log(err)});
-
+//CORS SETTING
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,Authorization');
+    if (req.method == 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'PUT,POST,PATCH,DELETE,GET');
+        return res.status(200).json({});
+    }
+    next();
+});
 // mongoose
 //   .connect(
 //     `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.8pl1w.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`,
